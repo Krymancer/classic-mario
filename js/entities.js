@@ -12,7 +12,7 @@ export function createPlayer(){
 
         player.addTrait(new Go());    
         player.addTrait(new Jump());    
-        player.addTrait(new Velocity());
+        //player.addTrait(new Velocity());
 
          
         player.draw = function playerDraw(context){
