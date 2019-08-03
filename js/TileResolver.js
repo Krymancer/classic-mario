@@ -30,7 +30,7 @@ export default class TileResolver{
             return {
                 tile,
                 x1,
-                x2,
+                x2, 
                 y1,
                 y2
             };
