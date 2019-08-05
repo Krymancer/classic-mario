@@ -1,5 +1,10 @@
 import {Vector2d} from "./Math.js"
 
+export const Sides = {
+    TOP: Symbol('top'),
+    BOTTOM: Symbol('bottom')    
+}
+
 export default class Entity{
     constructor(){
         this.pos = new Vector2d(0,0);
@@ -17,6 +22,12 @@ export default class Entity{
     update(deltaTime){
         this.traits.forEach(trait => {
             trait.update(this, deltaTime)
+        });
+    }
+
+    obstruct(side){
+        this.traits.forEach(trait => {
+            trait.obstruct(this, side);
         });
     }
 }

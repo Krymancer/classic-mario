@@ -7,7 +7,9 @@ export default class Level{
         this.compositor = new Compositor();
         this.entities = new Set();
         this.tiles = new Matrix();
-        this.gravity = 2000;
+        
+        this.gravity = 1500;
+        this.totalTime = 0;
 
         this.tileCollider = new TileCollider(this.tiles);
     }
@@ -25,5 +27,7 @@ export default class Level{
             entity.vel.y += this.gravity * deltaTime;
 
         });
+
+        this.totalTime += deltaTime;
     }
 }

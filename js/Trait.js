@@ -6,4 +6,7 @@ export default class Trait{
     update(){
         console.warn('Unhadled update');
     }
+
+    obstruct(){
+    }
 }

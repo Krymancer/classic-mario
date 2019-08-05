@@ -1,11 +1,8 @@
-import SpriteSheet from "./SpriteSheet.js"
-import Compositor from "./Compositor.js"
-import Entity from "./Entity.js"
 import Timer from "./Timer.js"
+import Camera from "./Camera.js"
 
 import {setupKeyboard} from "./input.js"
-import {createCollisionLayer} from "./layers.js"
-import {loadImage,loadLevel} from "./loader.js"
+import {loadLevel} from "./loader.js"
 import {createPlayer} from "./entities.js"
 
 const canvas = document.getElementById("game");
@@ -16,9 +13,10 @@ Promise.all([
     loadLevel("1-1")
 ]).then(([player,level]) => {
 
-    //level.compositor.layers.push(createCollisionLayer(level));
-
-    player.pos.set(64,180);
+    const camera = new Camera();
+    window.camera = camera;
+        
+    player.pos.set(64,64);
     level.entities.add(player);
 
     const input = setupKeyboard(player);
@@ -27,7 +25,12 @@ Promise.all([
     const timer = new Timer();
     timer.update = function update(deltaTime){
         level.update(deltaTime);
-        level.compositor.draw(context);
+
+        if(player.pos.x > 100){
+            camera.pos.x = player.pos.x - 100;
+        }
+
+        level.compositor.draw(context,camera);
     }
 
     timer.start();

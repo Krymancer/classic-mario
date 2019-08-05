@@ -1,0 +1,54 @@
+{
+    "imagePath" : "assets/tileset.png",
+    "tileW": 16,
+    "tileH": 16,
+
+    "tiles": [
+        {
+            "name": "ground",
+            "index": [0,0]
+        },
+        {
+            "name": "sky",
+            "index": [3,23]
+        },
+        {
+            "name": "solid",
+            "index": [0,1]
+        },
+        {
+            "name": "brick",
+            "index": [1,0]
+        },
+        {
+            "name": "lucky",
+            "index": [24,0]
+        },
+        {
+            "name": "lucky-1",
+            "index": [24,0]
+        },
+        {
+            "name": "lucky-2",
+            "index": [25,0]
+        },
+        {
+            "name": "lucky-3",
+            "index": [26,0]
+        }
+    ],
+
+    "animations": [
+        {
+            "name": "lucky",
+            "frameLength": 0.12,
+            "frames": [
+                "lucky-1",
+                "lucky-1",
+                "lucky-2",
+                "lucky-3",
+                "lucky-2"
+            ]
+        }
+    ]
+}
