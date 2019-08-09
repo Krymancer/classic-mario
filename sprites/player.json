@@ -25,6 +25,22 @@
         {
             "name": "jump",
             "rect": [355, 44, 16, 16]
+        }, 
+        {
+            "name": "dead",
+            "rect": [486, 44, 16, 16]
+        }
+    ],
+     
+    "animations": [
+        {
+            "name": "run",
+            "frameLength": 6,
+            "frames": [
+                "run-1",
+                "run-2",
+                "run-3"
+            ]
         }
     ]
 }

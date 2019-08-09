@@ -1,23 +1,39 @@
 import Timer from "./Timer.js"
 import Camera from "./Camera.js"
+import Entity from "./Entity.js"
+import PlayerControler from "./traits/PlayerController.js"
 
 import {setupKeyboard} from "./input.js"
-import {loadLevel} from "./loader.js"
-import {createPlayer} from "./entities.js"
+import {createLevelLoader} from "./loaders/level.js"
+import {loadEntities} from "./entities.js"
+import {createCollisionLayer} from "./layers/collision.js"
+import {loadFont} from "./loaders/font.js"
+import {createDashboardLayer} from "./layers/dashboard.js"
 
-const canvas = document.getElementById("game");
-const context = canvas.getContext("2d");
+function createPlayerEnvironment(playerEntity){
+    const playerEnvironment = new Entity();
+    const playerController = new PlayerControler();
+    playerController.checkpoint.set(64,64);
+    playerController.setPlayer(playerEntity);
+    playerEnvironment.addTrait(playerController);
 
-Promise.all([
-    createPlayer(),
-    loadLevel("1-1")
-]).then(([player,level]) => {
+    return playerEnvironment;
+}
+
+async function main(canvas){
+    const context = canvas.getContext("2d");
+    const [entityFactory, font]  = await Promise.all([loadEntities(),loadFont()]);
+    const loadLevel = await createLevelLoader(entityFactory);
+    const level = await loadLevel('1-1');
 
     const camera = new Camera();
-    window.camera = camera;
         
-    player.pos.set(64,64);
-    level.entities.add(player);
+    const player = entityFactory.player();
+    const playerEnvironment = createPlayerEnvironment(player);
+    level.entities.add(playerEnvironment);
+
+    level.compositor.layers.push(createCollisionLayer(level));
+    level.compositor.layers.push(createDashboardLayer(font,playerEnvironment));
 
     const input = setupKeyboard(player);
     input.listen(window);
@@ -26,12 +42,13 @@ Promise.all([
     timer.update = function update(deltaTime){
         level.update(deltaTime);
 
-        if(player.pos.x > 100){
-            camera.pos.x = player.pos.x - 100;
-        }
+        camera.pos.x = Math.max(0,player.pos.x - 100);
 
         level.compositor.draw(context,camera);
     }
 
     timer.start();
-});
+}
+
+const canvas = document.getElementById("game");
+main(canvas);

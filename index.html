@@ -3,14 +3,21 @@
 <head>
     <title>Super Mario</title>
     <style>
-     *{
-        /*  zoom: 1.4; */
-        overflow: hidden;
-    }
+        body {
+            background: #181717;
+            margin: 0;
+        }
+
+        #game{
+            display: block;
+            image-rendering: pixelated;
+            height: 100vh;
+            margin: auto;
+        }
     </style>
 </head>
 <body>
-    <canvas id="game" width="640" height="640"></canvas>
+    <canvas id="game" width="256" height="240"></canvas>
 </body>
 <script type="module" src='js/main.js'></script>
 </html>
