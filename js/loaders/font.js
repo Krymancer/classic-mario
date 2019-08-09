@@ -4,7 +4,7 @@ import SpriteSheet from "../SpriteSheet.js"
 const CHARS = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
 
 export async function loadFont(){
-    return loadImage('./assets/font.png')
+    return loadImage('assets/font.png')
     .then(image =>{
         const fontSprite = new SpriteSheet(image);
         const size = 8;
