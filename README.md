@@ -24,4 +24,4 @@ The game architecture actually is very simple:
 * The folder assets has all the imagens used in this project.
 * The Js folder has all the source code
 * The level folder contains the descriptions of levels in json's
-* As same as level folder, the sprites folder contains the descriptions of your entities as mario, koopas, gombas and etc.
+* As same as level folder, the sprites folder contains the descriptions of your entities e.g: mario, koopas, gombas and etc.
