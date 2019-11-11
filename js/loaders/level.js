@@ -35,10 +35,10 @@ function setupBackground(levelSpec, level, backgorundSprites) {
 function setupEntities(levelSpec, level, entityFactory) {
     const spriteLayer = createSpriteLayer(level.entities);
     level.compositor.layers.push(spriteLayer);
-    levelSpec.entities.forEach(({name, pos: [x,y]}) => {
+    levelSpec.entities.forEach(({ name, pos: [x, y] }) => {
         const createEntity = entityFactory[name];
         const entity = createEntity();
-        entity.pos.set(x,y);
+        entity.pos.set(x, y);
         level.entities.add(entity);
     });
 }
@@ -57,7 +57,7 @@ export function createLevelLoader(entityFactory) {
                 setupBackground(levelSpec, level, backgorundSprites);
                 setupEntities(levelSpec, level, entityFactory);
                 level.length = levelSpec.length;
-                
+
                 return level;
             });
     }
@@ -102,9 +102,9 @@ function* expandTiles(tiles, patterns) {
     function* walkTiles(tiles, offsetX, offsetY) {
         for (const tile of tiles) {
             for (const {
-                    x,
-                    y
-                } of expandRanges(tile.ranges)) {
+                x,
+                y
+            } of expandRanges(tile.ranges)) {
                 const derivedX = x + offsetX;
                 const derivedY = y + offsetY;
                 if (tile.pattern) {
@@ -130,10 +130,10 @@ function createCollisionGrid(tiles, patterns) {
     const grid = new Matrix();
 
     for (const {
-            tile,
-            x,
-            y
-        } of expandTiles(tiles, patterns)) {
+        tile,
+        x,
+        y
+    } of expandTiles(tiles, patterns)) {
         grid.set(x, y, {
             type: tile.type
         });
@@ -146,10 +146,10 @@ function createBackgroundGrid(tiles, patterns) {
     const grid = new Matrix();
 
     for (const {
-            tile,
-            x,
-            y
-        } of expandTiles(tiles, patterns)) {
+        tile,
+        x,
+        y
+    } of expandTiles(tiles, patterns)) {
         grid.set(x, y, {
             name: tile.name
         });

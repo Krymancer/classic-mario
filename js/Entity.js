@@ -1,5 +1,3 @@
-import BondingBox  from "./BoundingBox.js"
-
 import {Vector2d} from "./Math.js"
 import BoundingBox from "./BoundingBox.js";
 

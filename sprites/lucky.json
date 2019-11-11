@@ -1,0 +1,40 @@
+{
+    "imagePath" : "assets/tileset.png",
+
+    "frames": [
+        {
+            "name": "lucky",
+            "rect": [25 , 0, 16, 16]
+        },
+        {
+            "name": "lucky-1",
+            "rect": [384, 0, 16, 16]
+        },
+        {
+            "name": "lucky-2",
+            "rect": [400, 0, 16, 16]
+        },
+        {
+            "name": "lucky-3",
+            "rect": [416, 0, 16, 16]
+        },
+        {
+            "name": "lucky-dead",
+            "rect": [432, 0, 16, 16]
+        }
+    ],
+
+    "animations": [
+        {
+            "name": "blink",
+            "frameLength": 0.12,
+            "frames": [
+                "lucky-1",
+                "lucky-1",
+                "lucky-2",
+                "lucky-3",
+                "lucky-2"
+            ]
+        }
+    ]
+}
