@@ -1,83 +1,135 @@
 {
-    "imagePath" : "assets/tileset.png",
+    "imagePath": "images/tileset.png",
     "tileW": 16,
     "tileH": 16,
-
     "tiles": [
         {
             "name": "ground",
-            "index": [0,0]
+            "index": [
+                0,
+                0
+            ]
         },
         {
             "name": "sky",
-            "index": [3,23]
+            "index": [
+                3,
+                23
+            ]
         },
         {
             "name": "solid",
-            "index": [0,1]
+            "index": [
+                0,
+                1
+            ]
         },
         {
             "name": "brick",
-            "index": [1,0]
+            "index": [
+                1,
+                0
+            ]
         },
         {
             "name": "lucky",
-            "index": [24,0]
+            "index": [
+                24,
+                0
+            ]
         },
         {
             "name": "lucky-1",
-            "index": [24,0]
+            "index": [
+                24,
+                0
+            ]
         },
         {
             "name": "lucky-2",
-            "index": [25,0]
+            "index": [
+                25,
+                0
+            ]
         },
         {
             "name": "lucky-3",
-            "index": [26,0]
+            "index": [
+                26,
+                0
+            ]
         },
         {
             "name": "pipe-insert-vert-left",
-            "index": [0, 8]
+            "index": [
+                0,
+                8
+            ]
         },
         {
             "name": "pipe-insert-vert-right",
-            "index": [1, 8]
+            "index": [
+                1,
+                8
+            ]
         },
         {
             "name": "pipe-vert-left",
-            "index": [0, 9]
+            "index": [
+                0,
+                9
+            ]
         },
         {
             "name": "pipe-vert-right",
-            "index": [1, 9]
+            "index": [
+                1,
+                9
+            ]
         },
         {
             "name": "cloud-1-1",
-            "index": [0, 20]
+            "index": [
+                0,
+                20
+            ]
         },
         {
             "name": "cloud-1-2",
-            "index": [1, 20]
+            "index": [
+                1,
+                20
+            ]
         },
         {
             "name": "cloud-1-3",
-            "index": [2, 20]
+            "index": [
+                2,
+                20
+            ]
         },
         {
             "name": "cloud-2-1",
-            "index": [0, 21]
+            "index": [
+                0,
+                21
+            ]
         },
         {
             "name": "cloud-2-2",
-            "index": [1, 21]
+            "index": [
+                1,
+                21
+            ]
         },
         {
             "name": "cloud-2-3",
-            "index": [2, 21]
+            "index": [
+                2,
+                21
+            ]
         }
     ],
-
     "animations": [
         {
             "name": "lucky",

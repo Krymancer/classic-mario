@@ -6,7 +6,7 @@ Atempt to create a clone of Super Mario Bros (NES version) using only JavaScript
 
 The game architecture actually is very simple:
 
-- The folder assets has all the sprites
+- The folder images has all the sprites
 - The Js folder has all the source code
 - The level folder contains the descriptions of levels in json's
 - The sprites folder contains the descriptions of entities e.g: mario, koopas, gombas and etc.

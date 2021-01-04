@@ -1,64 +1,52 @@
-export default class SpriteSheet{
-    constructor(image,width,height){
-        this.image = image;
-        this.width = width;
-        this.height = height;
-        this.tiles = new Map();
-        this.animations = new Map();
+export default class SpriteSheet {
+  constructor(image, width, height) {
+    this.image = image;
+    this.width = width;
+    this.height = height;
+    this.tiles = new Map();
+    this.animations = new Map();
+  }
 
-    }
+  create(name, x, y, width, height) {
+    const buffers = [false, true].map((flip) => {
+      const buffer = document.createElement('canvas');
+      buffer.width = width;
+      buffer.height = height;
 
-    create(name,x,y,width,height){
-        const buffers = [false,true].map(flip => {
-            const buffer = document.createElement("canvas");
-            buffer.width = width;
-            buffer.height = height;
-    
-            const context = buffer.getContext("2d");
+      const context = buffer.getContext('2d');
 
-            if(flip){
-                context.scale(-1,1);
-                context.translate(-width,0);
-            }
-    
-            context.drawImage(
-                this.image,
-                x,
-                y,
-                width,
-                height,
-                0,
-                0,
-                width,
-                height
-            );
+      if (flip) {
+        context.scale(-1, 1);
+        context.translate(-width, 0);
+      }
 
-            return buffer;
+      context.drawImage(this.image, x, y, width, height, 0, 0, width, height);
 
-        });
-        
-        this.tiles.set(name,buffers);
-    }
+      return buffer;
+    });
 
-    createAnimation(name, animation){
-        this.animations.set(name,animation);
-    }
+    this.tiles.set(name, buffers);
+  }
 
-    createTile(name,x, y){
-        this.create(name, x*this.width, y*this.height, this.width, this.height);
-    }
+  createAnimation(name, animation) {
+    this.animations.set(name, animation);
+  }
 
-    draw(name, context, x, y, flip = false){
-        const buffer = this.tiles.get(name)[flip ? 1 : 0];
-        context.drawImage(buffer,x,y);
-    }
+  createTile(name, x, y) {
+    this.create(name, x * this.width, y * this.height, this.width, this.height);
+  }
 
-    drawTile(name, context, x, y){
-        this.draw(name, context, x * this.width, y * this.height);
-    }
+  draw(name, context, x, y, flip = false) {
+    const buffer = this.tiles.get(name)[flip ? 1 : 0];
+    context.drawImage(buffer, x, y);
+  }
 
-    drawAnimation(name, context, x, y, distance){
-        const animation = this.animations.get(name);
-        this.drawTile(animation(distance),context, x, y);
-    }
+  drawTile(name, context, x, y) {
+    this.draw(name, context, x * this.width, y * this.height);
+  }
+
+  drawAnimation(name, context, x, y, distance) {
+    const animation = this.animations.get(name);
+    this.drawTile(animation(distance), context, x, y);
+  }
 }

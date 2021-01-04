@@ -1,24 +1,29 @@
-export default class Trait{
-    constructor(name){
-        this.NAME = name;
-        this.tasks = [];
-    }
+export default class Trait {
+  constructor(name) {
+    this.NAME = name;
+    this.sounds = new Set();
+    this.tasks = [];
+  }
 
-    finalize(){
-        this.tasks.forEach(task => task());
-        this.tasks.length = 0;
-    }
+  finalize() {
+    this.tasks.forEach((task) => task());
+    this.tasks.length = 0;
+  }
 
-    update(){
-    }
+  update() {}
 
-    obstruct(){
-    }
+  obstruct() {}
 
-    collides(us, them){
-    }
+  playSounds(AudioBoard, audioContext) {
+    this.sounds.forEach((name) => {
+      AudioBoard.playAudio(name, audioContext);
+    });
+    this.sounds.clear();
+  }
 
-    qeue(task){
-        this.tasks.push(task);
-    }
+  collides(us, them) {}
+
+  qeue(task) {
+    this.tasks.push(task);
+  }
 }

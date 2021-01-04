@@ -1,42 +1,41 @@
-export class Vector2d{
-    constructor(x,y){
-        this.set(x,y);
-    }
+export class Vector2d {
+  constructor(x, y) {
+    this.set(x, y);
+  }
 
-    set(x,y){
-        this.x = x;
-        this.y = y;
-    }
+  set(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 }
 
-export class Matrix{
-    constructor(){
-        this.grid = [];
+export class Matrix {
+  constructor() {
+    this.grid = [];
+  }
+
+  set(x, y, value) {
+    if (!this.grid[x]) {
+      this.grid[x] = [];
     }
 
-    set(x,y,value){
-        if(!this.grid[x]){
-            this.grid[x] = [];
-        }
+    this.grid[x][y] = value;
+  }
 
-        this.grid[x][y] = value;
+  get(x, y) {
+    const col = this.grid[x];
+    if (col) {
+      return col[y];
     }
 
-    get(x,y){
-        const col = this.grid[x];
-        if(col){
-            return col[y];
-        }
+    return undefined;
+  }
 
-        return undefined;
-    }
-
-    forEach(callback){
-
-        this.grid.forEach((column, x) => {
-            column.forEach((value, y) => {
-                callback(value,x,y);    
-            });
-        });    
-    }
+  forEach(callback) {
+    this.grid.forEach((column, x) => {
+      column.forEach((value, y) => {
+        callback(value, x, y);
+      });
+    });
+  }
 }

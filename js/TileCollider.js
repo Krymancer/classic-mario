@@ -1,94 +1,91 @@
-import TileResolver from "./TileResolver.js"
+import TileResolver from './TileResolver.js';
 
-import {Sides} from "./Entity.js"
+import {Sides} from './Entity.js';
 
-export default class TileCollider{
-    constructor(tileMatrix){
-        this.tiles = new TileResolver(tileMatrix);
+export default class TileCollider {
+  constructor(tileMatrix) {
+    this.tiles = new TileResolver(tileMatrix);
+  }
+
+  test(entity) {
+    this.checkY(entity);
+  }
+
+  checkX(entity) {
+    let x;
+
+    if (entity.vel.x > 0) {
+      x = entity.bounds.right;
+    } else if (entity.vel.x < 0) {
+      x = entity.bounds.left;
+    } else {
+      return;
     }
 
-    test(entity){
-        this.checkY(entity);
-    }
+    const matches = this.tiles.searchByRange(
+      x,
+      x,
+      entity.bounds.top,
+      entity.bounds.bootom,
+    );
 
-    checkX(entity){
+    matches.forEach((match) => {
+      if (!match) {
+        return;
+      }
 
-        let x;
+      if (match.tile.type !== 'ground') {
+        return;
+      }
 
-        if(entity.vel.x > 0){
-            x = entity.bounds.right;
-        }else if(entity.vel.x < 0){
-            x = entity.bounds.left;
-        }else{
-            return;
+      if (entity.vel.x > 0) {
+        if (entity.bounds.right > match.x1) {
+          entity.obstruct(Sides.RIGHT, match);
         }
-
-        const matches = this.tiles.searchByRange(
-            x,x,
-            entity.bounds.top, entity.bounds.bootom);
-
-
-        matches.forEach(match => {
-            if(!match){
-                return;
-            }
-
-            if(match.tile.type !== 'ground'){
-                return;
-            }
-    
-            if(entity.vel.x > 0 ){
-                if(entity.bounds.right > match.x1){
-                    entity.obstruct(Sides.RIGHT, match);
-                }
-            }else if(entity.vel.x < 0 ){
-
-                if(entity.bounds.left < match.x2){
-                    entity.obstruct(Sides.LEFT, match);
-                }
-            }
-
-        });      
-
-    }
-
-    checkY(entity){
-
-        let y;
-
-        if(entity.vel.y > 0){
-            y = entity.bounds.bottom;
-        }else if(entity.vel.y < 0){
-            y = entity.bounds.top;
-        }else{
-            return;
+      } else if (entity.vel.x < 0) {
+        if (entity.bounds.left < match.x2) {
+          entity.obstruct(Sides.LEFT, match);
         }
+      }
+    });
+  }
 
-        const matches = this.tiles.searchByRange(
-            entity.bounds.left,entity.bounds.right,
-            y,y);
+  checkY(entity) {
+    let y;
 
-
-        matches.forEach(match => {
-            if(!match){
-                return;
-            }
-
-            if(match.tile.type !== 'ground'){
-                return;
-            }
-    
-            if(entity.vel.y > 0 ){
-                if(entity.bounds.bottom > match.y1){
-                    entity.obstruct(Sides.BOTTOM, match);
-                }
-            }else if(entity.vel.y < 0 ){
-                if(entity.bounds.top < match.y2){
-                    entity.obstruct(Sides.TOP, match);
-                }
-            }
-
-        });      
-
+    if (entity.vel.y > 0) {
+      y = entity.bounds.bottom;
+    } else if (entity.vel.y < 0) {
+      y = entity.bounds.top;
+    } else {
+      return;
     }
+
+    const matches = this.tiles.searchByRange(
+      entity.bounds.left,
+      entity.bounds.right,
+      y,
+      y,
+    );
+
+    matches.forEach((match) => {
+      if (!match) {
+        return;
+      }
+
+      if (match.tile.type !== 'ground') {
+        return;
+      }
+
+      if (entity.vel.y > 0) {
+        if (entity.bounds.bottom > match.y1) {
+          entity.obstruct(Sides.BOTTOM, match);
+        }
+      } else if (entity.vel.y < 0) {
+        if (entity.bounds.top < match.y2) {
+          entity.obstruct(Sides.TOP, match);
+        }
+      }
+    });
+  }
 }

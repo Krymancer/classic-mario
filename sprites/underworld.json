@@ -1,16 +1,21 @@
 {
-    "imagePath" : "assets/tileset.png",
+    "imagePath": "images/tileset.png",
     "tileW": 16,
     "tileH": 16,
-
     "tiles": [
         {
             "name": "ground",
-            "index": [0,2]
+            "index": [
+                0,
+                2
+            ]
         },
         {
             "name": "sky",
-            "index": [13,3]
+            "index": [
+                13,
+                3
+            ]
         }
     ]
 }
