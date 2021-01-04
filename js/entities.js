@@ -1,20 +1,18 @@
-import {loadPlayer} from "./entities/Player.js"
-import {loadGoomba} from "./entities/Goomba.js"
-import {loadKoopa} from "./entities/Koopa.js"
-import {loadLucky} from "./entities/LuckyBlock.js"
+import { loadPlayer } from "./entities/Player.js"
+import { loadGoomba } from "./entities/Goomba.js"
+import { loadKoopa } from "./entities/Koopa.js"
 
-export function loadEntities(){
+export function loadEntities() {
     const entityFactories = {};
 
-    function addAs(name){
+    function addAs(name) {
         return factory => entityFactories[name] = factory;
     }
 
     return Promise.all([
         loadPlayer().then(addAs('player')),
         loadGoomba().then(addAs('goomba')),
-        loadKoopa().then(addAs('koopa')),
-        loadLucky().then(addAs('lucky'))
+        loadKoopa().then(addAs('koopa'))
     ])
-    .then(() => entityFactories);
+        .then(() => entityFactories);
 }
