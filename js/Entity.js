@@ -11,7 +11,7 @@ export const Sides = {
 
 export default class Entity {
   constructor() {
-    this.audio = new AudioBoard();
+    this.events = this.audio = new AudioBoard();
     this.pos = new Vector2d(0, 0);
     this.vel = new Vector2d(0, 0);
     this.size = new Vector2d(0, 0);
