@@ -22,6 +22,7 @@ function createPlayerEnvironment(playerEntity) {
 
 async function main(canvas) {
   const context = canvas.getContext('2d');
+  context.imageSmoothingEnabled = false;
   const audioContext = new AudioContext();
 
   const [entityFactory, font] = await Promise.all([
