@@ -17,15 +17,15 @@ export default class Timer {
 
       lastTime = time;
 
-      this.enqeue();
+      this.enqueue();
     };
   }
 
   start() {
-    this.enqeue();
+    this.enqueue();
   }
 
-  enqeue() {
+  enqueue() {
     requestAnimationFrame(this.updateProxy);
   }
 }

@@ -5,7 +5,6 @@ export default class Trait {
     this.NAME = name;
 
     this.events = new EventEmmiter();
-    this.sounds = new Set();
     this.tasks = [];
   }
 
@@ -18,16 +17,9 @@ export default class Trait {
 
   obstruct() {}
 
-  playSounds(AudioBoard, audioContext) {
-    this.sounds.forEach((name) => {
-      AudioBoard.playAudio(name, audioContext);
-    });
-    this.sounds.clear();
-  }
-
   collides(us, them) {}
 
-  qeue(task) {
+  queue(task) {
     this.tasks.push(task);
   }
 }

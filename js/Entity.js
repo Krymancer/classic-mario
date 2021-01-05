@@ -19,7 +19,7 @@ export default class Entity {
     this.bounds = new BoundingBox(this.pos, this.size, this.offset);
     this.lifeTime = 0;
     this.canCollide = true;
-
+    this.sounds = new Set();
     this.traits = [];
   }
 
@@ -31,8 +31,10 @@ export default class Entity {
   update(gameContext, level) {
     this.traits.forEach((trait) => {
       trait.update(this, gameContext, level);
-      trait.playSounds(this.audio, gameContext.audioContext);
     });
+
+    this.playSounds(this.audio, gameContext.audioContext);
+
     this.lifeTime += gameContext.deltaTime;
   }
 
@@ -52,5 +54,12 @@ export default class Entity {
 
   finalize() {
     this.traits.forEach((trait) => trait.finalize());
+  }
+
+  playSounds(AudioBoard, audioContext) {
+    this.sounds.forEach((name) => {
+      AudioBoard.playAudio(name, audioContext);
+    });
+    this.sounds.clear();
   }
 }

@@ -3,6 +3,11 @@ export class Vector2d {
     this.set(x, y);
   }
 
+  copy(vec2) {
+    this.x = vec2.x;
+    this.y = vec2.y;
+  }
+
   set(x, y) {
     this.x = x;
     this.y = y;
