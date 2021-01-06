@@ -1,10 +1,23 @@
 import TileResolver from './TileResolver.js';
 
-import {Sides} from './Entity.js';
+import {ground} from './tiles/ground.js';
+import {brick} from './tiles/brick.js';
+
+const X = 0;
+const Y = 1;
+
+const handlers = {
+  ground,
+  brick,
+};
 
 export default class TileCollider {
-  constructor(tileMatrix) {
-    this.tiles = new TileResolver(tileMatrix);
+  constructor() {
+    this.resolvers = [];
+  }
+
+  addGrid(tileMatrix) {
+    this.resolvers.push(new TileResolver(tileMatrix));
   }
 
   test(entity) {
@@ -21,33 +34,18 @@ export default class TileCollider {
     } else {
       return;
     }
+    for (const resolver of this.resolvers) {
+      const matches = resolver.searchByRange(
+        x,
+        x,
+        entity.bounds.top,
+        entity.bounds.bootom,
+      );
 
-    const matches = this.tiles.searchByRange(
-      x,
-      x,
-      entity.bounds.top,
-      entity.bounds.bootom,
-    );
-
-    matches.forEach((match) => {
-      if (!match) {
-        return;
-      }
-
-      if (match.tile.type !== 'ground') {
-        return;
-      }
-
-      if (entity.vel.x > 0) {
-        if (entity.bounds.right > match.x1) {
-          entity.obstruct(Sides.RIGHT, match);
-        }
-      } else if (entity.vel.x < 0) {
-        if (entity.bounds.left < match.x2) {
-          entity.obstruct(Sides.LEFT, match);
-        }
-      }
-    });
+      matches.forEach((match) => {
+        this.handle(X, entity, match);
+      });
+    }
   }
 
   checkY(entity) {
@@ -60,32 +58,25 @@ export default class TileCollider {
     } else {
       return;
     }
+    for (const resolver of this.resolvers) {
+      const matches = resolver.searchByRange(
+        entity.bounds.left,
+        entity.bounds.right,
+        y,
+        y,
+      );
 
-    const matches = this.tiles.searchByRange(
-      entity.bounds.left,
-      entity.bounds.right,
-      y,
-      y,
-    );
+      matches.forEach((match) => {
+        this.handle(Y, entity, match, resolver);
+      });
+    }
+  }
 
-    matches.forEach((match) => {
-      if (!match) {
-        return;
-      }
-
-      if (match.tile.type !== 'ground') {
-        return;
-      }
-
-      if (entity.vel.y > 0) {
-        if (entity.bounds.bottom > match.y1) {
-          entity.obstruct(Sides.BOTTOM, match);
-        }
-      } else if (entity.vel.y < 0) {
-        if (entity.bounds.top < match.y2) {
-          entity.obstruct(Sides.TOP, match);
-        }
-      }
-    });
+  handle(index, entity, match, resolver) {
+    if (!match) return;
+    const handler = handlers[match.tile.type];
+    if (handler) {
+      handler[index](entity, match, resolver);
+    }
   }
 }

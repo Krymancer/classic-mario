@@ -1,24 +1,13 @@
 import Timer from './Timer.js';
 import Camera from './Camera.js';
-import Entity from './Entity.js';
-import PlayerControler from './traits/PlayerController.js';
 
-import {setupKeyboard} from './input.js';
-import {createLevelLoader} from './loaders/level.js';
-import {loadEntities} from './entities.js';
 import {createCollisionLayer} from './layers/collision.js';
-import {loadFont} from './loaders/font.js';
 import {createDashboardLayer} from './layers/dashboard.js';
-
-function createPlayerEnvironment(playerEntity) {
-  const playerEnvironment = new Entity();
-  const playerController = new PlayerControler();
-  playerController.checkpoint.set(64, 64);
-  playerController.setPlayer(playerEntity);
-  playerEnvironment.addTrait(playerController);
-
-  return playerEnvironment;
-}
+import {createLevelLoader} from './loaders/level.js';
+import {createPlayer, createPlayerEnvironment} from './player.js';
+import {loadEntities} from './entities.js';
+import {loadFont} from './loaders/font.js';
+import {setupKeyboard} from './input.js';
 
 async function main(canvas) {
   const context = canvas.getContext('2d');
@@ -35,7 +24,7 @@ async function main(canvas) {
 
   const camera = new Camera();
 
-  const player = entityFactory.player();
+  const player = createPlayer(entityFactory.player());
   const playerEnvironment = createPlayerEnvironment(player);
   level.entities.add(playerEnvironment);
 

@@ -5,27 +5,16 @@ import {createBackgroundLayer} from '../layers/background.js';
 import {loadJSON, loadSpriteSheet} from '../loader.js';
 import {Matrix} from '../Math.js';
 
-function setupCollision(levelSpec, level) {
-  const mergedTiles = levelSpec.layers.reduce((mergedTiles, layerSpec) => {
-    return mergedTiles.concat(layerSpec.tiles);
-  }, []);
-
-  const collisionGrid = createCollisionGrid(mergedTiles, levelSpec.patterns);
-  level.setCollisionGrid(collisionGrid);
-}
-
 function setupBackground(levelSpec, level, backgorundSprites) {
   levelSpec.layers.forEach((layer) => {
-    const backgroundGrid = createBackgroundGrid(
-      layer.tiles,
-      levelSpec.patterns,
-    );
+    const grid = createGrid(layer.tiles, levelSpec.patterns);
     const backgroungLayer = createBackgroundLayer(
       level,
-      backgroundGrid,
+      grid,
       backgorundSprites,
     );
     level.compositor.layers.push(backgroungLayer);
+    level.tileCollider.addGrid(grid);
   });
 }
 
@@ -49,10 +38,8 @@ export function createLevelLoader(entityFactory) {
       .then(([levelSpec, backgorundSprites]) => {
         const level = new Level();
 
-        setupCollision(levelSpec, level);
         setupBackground(levelSpec, level, backgorundSprites);
         setupEntities(levelSpec, level, entityFactory);
-        level.length = levelSpec.length;
 
         return level;
       });
@@ -119,25 +106,11 @@ function* expandTiles(tiles, patterns) {
   yield* walkTiles(tiles, xoff, yoff);
 }
 
-function createCollisionGrid(tiles, patterns) {
+function createGrid(tiles, patterns) {
   const grid = new Matrix();
 
   for (const {tile, x, y} of expandTiles(tiles, patterns)) {
-    grid.set(x, y, {
-      type: tile.type,
-    });
-  }
-
-  return grid;
-}
-
-function createBackgroundGrid(tiles, patterns) {
-  const grid = new Matrix();
-
-  for (const {tile, x, y} of expandTiles(tiles, patterns)) {
-    grid.set(x, y, {
-      name: tile.name,
-    });
+    grid.set(x, y, tile);
   }
 
   return grid;

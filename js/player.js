@@ -2,13 +2,14 @@ import Entity from './Entity.js';
 import Player from './traits/Player.js';
 import PlayerController from './traits/PlayerController.js';
 
-export function createPlayerEnv(playerEntity) {
-  const playerEnv = new Entity();
-  const playerControl = new PlayerController();
-  playerControl.checkpoint.set(64, 64);
-  playerControl.setPlayer(playerEntity);
-  playerEnv.addTrait(playerControl);
-  return playerEnv;
+export function createPlayerEnvironment(playerEntity) {
+  const playerEnvironment = new Entity();
+  const playerController = new PlayerController();
+  playerController.checkpoint.set(64, 64);
+  playerController.setPlayer(playerEntity);
+  playerEnvironment.addTrait(playerController);
+
+  return playerEnvironment;
 }
 
 export function createPlayer(entity) {
