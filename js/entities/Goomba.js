@@ -5,9 +5,7 @@ import Killable from '../traits/Killable.js';
 import Solid from '../traits/Solid.js';
 import Physics from '../traits/Physics.js';
 
-import {loadSpriteSheet} from '../loader.js';
-
-import {Sides} from '../Entity.js';
+import {loadSpriteSheet} from '../loaders/sprite.js';
 
 export function loadGoomba() {
   return loadSpriteSheet('goomba').then(createGoombaFactory);

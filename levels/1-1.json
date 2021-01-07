@@ -1,5 +1,6 @@
 {
     "spriteSheet": "overworld",
+    "musicSheet": "overworld",
     "length": 3103,
     "layers": [
         {

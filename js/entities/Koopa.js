@@ -5,9 +5,7 @@ import Killable from '../traits/Killable.js';
 import Solid from '../traits/Solid.js';
 import Physics from '../traits/Physics.js';
 
-import {loadSpriteSheet} from '../loader.js';
-
-import {Sides} from '../Entity.js';
+import {loadSpriteSheet} from '../loaders/sprite.js';
 
 const STATE_WALKING = Symbol('walking');
 const STATE_HIDDING = Symbol('hidding');
