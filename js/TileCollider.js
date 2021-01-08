@@ -2,6 +2,7 @@ import TileResolver from './TileResolver.js';
 
 import {ground} from './tiles/ground.js';
 import {brick} from './tiles/brick.js';
+import {coin} from './tiles/coin.js';
 
 const X = 0;
 const Y = 1;
@@ -9,6 +10,7 @@ const Y = 1;
 const handlers = {
   ground,
   brick,
+  coin,
 };
 
 export default class TileCollider {

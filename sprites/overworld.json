@@ -60,6 +60,27 @@
             ]
         },
         {
+            "name": "coin-1",
+            "index": [
+                24,
+                1
+            ]
+        },
+        {
+            "name": "coin-2",
+            "index": [
+                25,
+                1
+            ]
+        },
+        {
+            "name": "coin-3",
+            "index": [
+                26,
+                1
+            ]
+        },
+        {
             "name": "pipe-insert-vert-left",
             "index": [
                 0,
@@ -161,6 +182,17 @@
                 "lucky-2",
                 "lucky-3",
                 "lucky-2"
+            ]
+        },
+        {
+            "name": "coin",
+            "frameLength": 0.12,
+            "frames": [
+                "coin-1",
+                "coin-1",
+                "coin-2",
+                "coin-3",
+                "coin-2"
             ]
         }
     ]

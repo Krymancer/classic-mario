@@ -3,7 +3,7 @@ export default class EventBuffer {
     this.events = [];
   }
 
-  emmit(name, ...args) {
+  emit(name, ...args) {
     const event = {name, args};
     this.events.push(event);
   }

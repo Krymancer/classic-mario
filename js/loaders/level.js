@@ -6,6 +6,26 @@ import {loadJSON} from '../loader.js';
 import {loadMusicSheet} from '../loaders/music.js';
 import {loadSpriteSheet} from '../loaders/sprite.js';
 import {Matrix} from '../Math.js';
+import Entity from '../Entity.js';
+import LevelTimer from '../traits/LevelTimer.js';
+
+function createTimer() {
+  const timer = new Entity();
+  timer.addTrait(new LevelTimer());
+  return timer;
+}
+
+function setupBehavior(level) {
+  const timer = createTimer();
+  level.entities.add(timer);
+
+  level.events.listen(LevelTimer.EVENT_TIMER_OK, () => {
+    level.music.playTheme();
+  });
+  level.events.listen(LevelTimer.EVENT_TIMER_HURRY, () => {
+    level.music.playHurryTheme();
+  });
+}
 
 function setupBackground(levelSpec, level, backgorundSprites) {
   levelSpec.layers.forEach((layer) => {
@@ -47,6 +67,8 @@ export function createLevelLoader(entityFactory) {
 
         setupBackground(levelSpec, level, backgorundSprites);
         setupEntities(levelSpec, level, entityFactory);
+        setupBehavior(level);
+
         return level;
       });
   };

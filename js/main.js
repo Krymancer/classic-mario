@@ -20,16 +20,18 @@ async function main(canvas) {
   ]);
 
   const loadLevel = await createLevelLoader(entityFactory);
-  const level = await loadLevel('1-1');
+  const level = await loadLevel('coin');
 
   const camera = new Camera();
 
   const player = createPlayer(entityFactory.player());
+  player.player.name = 'MARIO';
+
   const playerEnvironment = createPlayerEnvironment(player);
-  level.entities.add(playerEnvironment);
+  level.entities.add(player);
 
   level.compositor.layers.push(createCollisionLayer(level));
-  level.compositor.layers.push(createDashboardLayer(font, playerEnvironment));
+  level.compositor.layers.push(createDashboardLayer(font, level));
 
   const input = setupKeyboard(player);
   input.listen(window);

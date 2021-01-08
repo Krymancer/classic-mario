@@ -58,7 +58,7 @@ export default class Entity {
   draw() {}
 
   finalize() {
-    this.events.emmit(Trait.EVENT_TASK);
+    this.events.emit(Trait.EVENT_TASK, this);
     this.traits.forEach((trait) => trait.finalize(this));
     this.events.clear();
   }
