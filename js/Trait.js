@@ -16,7 +16,6 @@ export default class Trait {
   listen(name, callback, count = Infinity) {
     const listener = {name, callback, count};
     this.listeners.push(listener);
-    console.log('Added listener', this.NAME, name);
   }
 
   update() {}
