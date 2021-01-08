@@ -1,16 +1,22 @@
-import EventEmmiter from './EventEmitter.js';
-
 export default class Trait {
+  static EVENT_TASK = Symbol('task');
+
   constructor(name) {
     this.NAME = name;
-
-    this.events = new EventEmmiter();
-    this.tasks = [];
+    this.listeners = [];
   }
 
-  finalize() {
-    this.tasks.forEach((task) => task());
-    this.tasks.length = 0;
+  finalize(entity) {
+    this.listeners = this.listeners.filter((listener) => {
+      entity.events.process(listener.name, listener.callback);
+      return --listener.count;
+    });
+  }
+
+  listen(name, callback, count = Infinity) {
+    const listener = {name, callback, count};
+    this.listeners.push(listener);
+    console.log('Added listener', this.NAME, name);
   }
 
   update() {}
@@ -20,6 +26,6 @@ export default class Trait {
   collides(us, them) {}
 
   queue(task) {
-    this.tasks.push(task);
+    this.listen(Trait.EVENT_TASK, task, 1);
   }
 }

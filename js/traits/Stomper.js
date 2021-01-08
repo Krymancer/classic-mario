@@ -1,12 +1,12 @@
 import Trait from '../Trait.js';
 
 export default class Stomper extends Trait {
+  static EVENT_STOMP = Symbol('stomp');
+
   constructor() {
     super('stomper');
     this.bounceSpeed = 400;
   }
-
-  obstruct(entity, side) {}
 
   bounce(us, them) {
     us.bounds.bottom = them.bounds.top;
@@ -21,7 +21,7 @@ export default class Stomper extends Trait {
     if (us.vel.y > them.vel.y) {
       this.queue(() => this.bounce(us, them));
       us.sounds.add('stomp');
-      this.events.emmit('stomp', us, them);
+      us.events.emmit(Stomper.EVENT_STOMP, us, them);
     }
   }
 }

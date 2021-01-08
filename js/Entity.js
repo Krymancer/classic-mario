@@ -1,6 +1,8 @@
 import {Vector2d} from './Math.js';
 import BoundingBox from './BoundingBox.js';
 import AudioBoard from './AudioBoard.js';
+import EventBuffer from './EventBuffer.js';
+import Trait from './Trait.js';
 
 export const Sides = {
   TOP: Symbol('top'),
@@ -11,15 +13,18 @@ export const Sides = {
 
 export default class Entity {
   constructor() {
-    this.events = this.audio = new AudioBoard();
+    this.audio = new AudioBoard();
+    this.sounds = new Set();
+
+    this.events = new EventBuffer();
+
     this.pos = new Vector2d(0, 0);
     this.vel = new Vector2d(0, 0);
     this.size = new Vector2d(0, 0);
     this.offset = new Vector2d(0, 0);
     this.bounds = new BoundingBox(this.pos, this.size, this.offset);
     this.lifeTime = 0;
-    this.canCollide = true;
-    this.sounds = new Set();
+
     this.traits = [];
   }
 
@@ -53,7 +58,9 @@ export default class Entity {
   draw() {}
 
   finalize() {
-    this.traits.forEach((trait) => trait.finalize());
+    this.events.emmit(Trait.EVENT_TASK);
+    this.traits.forEach((trait) => trait.finalize(this));
+    this.events.clear();
   }
 
   playSounds(AudioBoard, audioContext) {

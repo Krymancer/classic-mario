@@ -132,13 +132,12 @@ class Behavior extends Trait {
     this.state = STATE_PANIC;
   }
 
-  update(us, deltaTime) {
+  update(us, {deltaTime}) {
     if (this.state === STATE_HIDDING) {
       this.hideTime += deltaTime;
-    }
-
-    if (this.hideTime > this.hideDuration) {
-      this.unhide(us);
+      if (this.hideTime > this.hideDuration) {
+        this.unhide(us);
+      }
     }
   }
 }
