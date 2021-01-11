@@ -1,21 +1,57 @@
 import {loadPlayer} from './entities/Player.js';
-import {loadGoomba} from './entities/Goomba.js';
-import {loadKoopa} from './entities/Koopa.js';
+import {loadGoombaBrown, loadGoombaBlue} from './entities/Goomba.js';
+import {loadKoopaGreen, loadKoopaBlue} from './entities/Koopa.js';
+import {loadPiranhaPlant} from './entities/PiranhaPlant.js';
+import {loadPipePortal} from './entities/PipePortal.js';
+import {loadFlagPole} from './entities/FlagPole.js';
+import {loadBrickShrapnel} from './entities/BrickShrapnel.js';
+
 import {loadBullet} from './entities/Bullet.js';
 import {loadCannon} from './entities/Cannon.js';
 
-export function loadEntities(audioContext) {
+function createPool(size) {
+  const pool = [];
+
+  return function createPooledFactory(factory) {
+    for (let i = 0; i < size; i++) {
+      pool.push(factory());
+    }
+
+    let count = 0;
+    return function pooledFactory() {
+      const entity = pool[count++ % pool.length];
+      entity.lifetime = 0;
+      return entity;
+    };
+  };
+}
+
+export async function loadEntities(audioContext) {
   const entityFactories = {};
 
-  function addAs(name) {
-    return (factory) => (entityFactories[name] = factory);
+  function setup(loader) {
+    return loader(audioContext);
   }
 
-  return Promise.all([
-    loadPlayer(audioContext).then(addAs('player')),
-    loadGoomba(audioContext).then(addAs('goomba')),
-    loadKoopa(audioContext).then(addAs('koopa')),
-    loadBullet(audioContext).then(addAs('bullet')),
-    loadCannon(audioContext).then(addAs('cannon')),
-  ]).then(() => entityFactories);
+  function addAs(name) {
+    return function addFactory(factory) {
+      entityFactories[name] = factory;
+    };
+  }
+
+  await Promise.all([
+    setup(loadPlayer).then(addAs('player')),
+    setup(loadPiranhaPlant).then(addAs('piranha-plant')),
+    setup(loadGoombaBrown).then(addAs('goomba-brown')),
+    setup(loadGoombaBlue).then(addAs('goomba-blue')),
+    setup(loadKoopaGreen).then(addAs('koopa-green')),
+    setup(loadKoopaBlue).then(addAs('koopa-blue')),
+    setup(loadBullet).then(addAs('bullet')),
+    setup(loadCannon).then(addAs('cannon')),
+    setup(loadPipePortal).then(addAs('pipe-portal')),
+    setup(loadFlagPole).then(addAs('flag-pole')),
+    setup(loadBrickShrapnel).then(createPool(8)).then(addAs('brickShrapnel')),
+  ]);
+
+  return entityFactories;
 }

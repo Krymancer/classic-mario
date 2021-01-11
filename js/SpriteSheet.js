@@ -7,7 +7,11 @@ export default class SpriteSheet {
     this.animations = new Map();
   }
 
-  create(name, x, y, width, height) {
+  defineAnim(name, animation) {
+    this.animations.set(name, animation);
+  }
+
+  define(name, x, y, width, height) {
     const buffers = [false, true].map((flip) => {
       const buffer = document.createElement('canvas');
       buffer.width = width;
@@ -28,12 +32,8 @@ export default class SpriteSheet {
     this.tiles.set(name, buffers);
   }
 
-  createAnimation(name, animation) {
-    this.animations.set(name, animation);
-  }
-
-  createTile(name, x, y) {
-    this.create(name, x * this.width, y * this.height, this.width, this.height);
+  defineTile(name, x, y) {
+    this.define(name, x * this.width, y * this.height, this.width, this.height);
   }
 
   draw(name, context, x, y, flip = false) {
@@ -41,12 +41,12 @@ export default class SpriteSheet {
     context.drawImage(buffer, x, y);
   }
 
-  drawTile(name, context, x, y) {
-    this.draw(name, context, x * this.width, y * this.height);
-  }
-
-  drawAnimation(name, context, x, y, distance) {
+  drawAnim(name, context, x, y, distance) {
     const animation = this.animations.get(name);
     this.drawTile(animation(distance), context, x, y);
+  }
+
+  drawTile(name, context, x, y) {
+    this.draw(name, context, x * this.width, y * this.height);
   }
 }

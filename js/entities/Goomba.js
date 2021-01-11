@@ -12,6 +12,14 @@ export function loadGoomba() {
   return loadSpriteSheet('goomba').then(createGoombaFactory);
 }
 
+export function loadGoombaBrown() {
+  return loadSpriteSheet('goomba-brown').then(createGoombaFactory);
+}
+
+export function loadGoombaBlue() {
+  return loadSpriteSheet('goomba-blue').then(createGoombaFactory);
+}
+
 function createGoombaFactory(sprite) {
   const walkAnimation = sprite.animations.get('walk');
 

@@ -1,22 +1,25 @@
-import Entity from './Entity.js';
 import Player from './traits/Player.js';
-import PlayerController from './traits/PlayerController.js';
-
-export function createPlayerEnvironment(playerEntity) {
-  const playerEnvironment = new Entity();
-  const playerController = new PlayerController();
-  playerController.checkpoint.set(64, 64);
-  playerController.setPlayer(playerEntity);
-  playerEnvironment.addTrait(playerController);
-
-  return playerEnvironment;
-}
+import LevelTimer from './traits/LevelTimer.js';
 
 export function makePlayer(entity, name) {
   const player = new Player();
-  player.name = name;
+  player.name = 'MARIO';
   entity.addTrait(player);
-  return entity;
+
+  const timer = new LevelTimer();
+  entity.addTrait(timer);
+}
+
+export function resetPlayer(entity, worldName) {
+  entity.pos.set(0, 0);
+  entity.traits.get(LevelTimer).reset();
+  entity.traits.get(Player).world = worldName;
+}
+
+export function bootstrapPlayer(entity, level) {
+  entity.traits.get(LevelTimer).hurryEmitted = null;
+  entity.pos.copy(level.checkpoints[0]);
+  level.entities.add(entity);
 }
 
 export function* findPlayers(entities) {

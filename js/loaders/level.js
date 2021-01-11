@@ -5,7 +5,7 @@ import {createBackgroundLayer} from '../layers/background.js';
 import {loadJSON} from '../loader.js';
 import {loadMusicSheet} from '../loaders/music.js';
 import {loadSpriteSheet} from '../loaders/sprite.js';
-import {Matrix} from '../Math.js';
+import {Matrix, Vector2d} from '../Math.js';
 import Entity from '../Entity.js';
 import LevelTimer from '../traits/LevelTimer.js';
 import Trigger from '../traits/Trigger.js';
@@ -42,6 +42,33 @@ function setupBackground(levelSpec, level, backgorundSprites, patterns) {
     );
     level.compositor.layers.push(backgroungLayer);
     level.tileCollider.addGrid(grid);
+  });
+}
+
+function setupCamera(level) {
+  let maxX = 0;
+  let maxTileSize = 0;
+  for (const resolver of level.tileCollider.resolvers) {
+    if (resolver.tileSize > maxTileSize) {
+      maxTileSize = resolver.tileSize;
+    }
+    resolver.matrix.forEach((tile, x, y) => {
+      if (x > maxX) {
+        maxX = x;
+      }
+    });
+  }
+  level.camera.max.x = (maxX + 1) * maxTileSize;
+}
+
+function setupCheckpoints(levelSpec, level) {
+  if (!levelSpec.checkpoints) {
+    level.checkpoints.push(new Vector2d(0, 0));
+    return;
+  }
+
+  levelSpec.checkpoints.forEach(([x, y]) => {
+    level.checkpoints.push(new Vector2d(x, y));
   });
 }
 
@@ -87,15 +114,31 @@ export function createLevelLoader(entityFactory) {
           loadPattern(levelSpec.patternSheet),
         ]),
       )
-      .then(([levelSpec, backgorundSprites, musicPlayer, patterns]) => {
+      .then(([levelSpec, backgroundSprites, musicPlayer, patterns]) => {
         const level = new Level();
         level.name = name;
         level.music.setPlayer(musicPlayer);
 
-        setupBackground(levelSpec, level, backgorundSprites, patterns);
+        setupBackground(levelSpec, level, backgroundSprites, patterns);
         setupEntities(levelSpec, level, entityFactory);
         setupTriggers(levelSpec, level);
+        setupCheckpoints(levelSpec, level);
+
         setupBehavior(level);
+        setupCamera(level);
+
+        for (const resolver of level.tileCollider.resolvers) {
+          const backgroundLayer = createBackgroundLayer(
+            level,
+            resolver.matrix,
+            backgroundSprites,
+          );
+          level.compositor.layers.push(backgroundLayer);
+        }
+
+        const spriteLayer = createSpriteLayer(level.entities);
+
+        level.compositor.layers.push(spriteLayer);
 
         return level;
       });

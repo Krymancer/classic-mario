@@ -2,45 +2,43 @@
     "spriteSheet": "overworld",
     "musicSheet": "silent",
     "patternSheet": "overworld-pattern",
-    "length": 3103,
+    "checkpoints": [
+        [40, 192]
+    ],
+
     "layers": [
         {
             "tiles": [
                 {
-                    "name": "sky",
+                    "style": "sky",
                     "ranges": [
                         [
-                            0,
-                            212,
-                            0,
-                            13
+                            0, 212,
+                            0, 13
                         ]
                     ]
                 },
                 {
-                    "name": "ground",
-                    "type": "ground",
+                    "style": "ground",
+                    "behavior": "ground",
                     "ranges": [
                         [
-                            0,
-                            212,
-                            13,
-                            2
+                            0, 212,
+                            13, 2
                         ]
                     ]
                 }
             ]
         }
     ],
+
     "entities": [],
+
     "triggers": [
         {
             "type": "goto",
             "name": "1-1",
-            "pos": [
-                64,
-                64
-            ]
+            "pos": [64, 64]
         }
     ]
 }

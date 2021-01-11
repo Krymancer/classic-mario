@@ -1,13 +1,13 @@
 {
-    "imagePath": "images/characters.gif",
+    "imageURL": "images/sprites.png",
     "frames": [
         {
             "name": "bullet",
             "rect": [
-                267,
-                334,
+                128,
+                0,
                 16,
-                14
+                16
             ]
         }
     ]

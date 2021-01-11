@@ -20,6 +20,8 @@ export default class Level extends Scene {
 
     this.name = '';
 
+    this.checkpoints = [];
+
     this.entities = new Set();
 
     this.camera = new Camera();

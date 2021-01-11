@@ -51,3 +51,10 @@ export class Matrix {
     }
   }
 }
+
+export const Direction = {
+  UP: new Vector2d(0, -1),
+  DOWN: new Vector2d(0, 1),
+  RIGHT: new Vector2d(1, 0),
+  LEFT: new Vector2d(-1, 0),
+};

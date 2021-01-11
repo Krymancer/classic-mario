@@ -1,11 +1,11 @@
 {
-    "imagePath": "images/characters.gif",
+    "imageURL": "images/sprites.png",
     "frames": [
         {
             "name": "idle",
             "rect": [
-                276,
-                44,
+                0,
+                88,
                 16,
                 16
             ]
@@ -13,8 +13,8 @@
         {
             "name": "run-1",
             "rect": [
-                290,
-                44,
+                16,
+                88,
                 16,
                 16
             ]
@@ -22,8 +22,8 @@
         {
             "name": "run-2",
             "rect": [
-                304,
-                43,
+                32,
+                88,
                 16,
                 16
             ]
@@ -31,8 +31,8 @@
         {
             "name": "run-3",
             "rect": [
-                321,
-                44,
+                48,
+                88,
                 16,
                 16
             ]
@@ -40,8 +40,8 @@
         {
             "name": "break",
             "rect": [
-                337,
-                44,
+                64,
+                88,
                 16,
                 16
             ]
@@ -49,30 +49,190 @@
         {
             "name": "jump",
             "rect": [
-                355,
-                44,
+                80,
+                88,
                 16,
                 16
             ]
         },
         {
-            "name": "dead",
+            "name": "die",
             "rect": [
-                486,
-                44,
+                96,
+                88,
                 16,
                 16
+            ]
+        },
+        {
+            "name": "climb-1",
+            "rect": [
+                0,
+                104,
+                16,
+                16
+            ]
+        },
+        {
+            "name": "climb-2",
+            "rect": [
+                16,
+                104,
+                16,
+                16
+            ]
+        },
+        {
+            "name": "swim-1",
+            "rect": [
+                32,
+                104,
+                16,
+                16
+            ]
+        },
+        {
+            "name": "swim-2",
+            "rect": [
+                48,
+                104,
+                16,
+                16
+            ]
+        },
+        {
+            "name": "swim-3",
+            "rect": [
+                64,
+                104,
+                16,
+                16
+            ]
+        },
+        {
+            "name": "swim-4",
+            "rect": [
+                80,
+                104,
+                16,
+                16
+            ]
+        },
+        {
+            "name": "swim-5",
+            "rect": [
+                96,
+                104,
+                16,
+                16
+            ]
+        },
+        {
+            "name": "idle-large",
+            "rect": [
+                112,
+                88,
+                16,
+                32
+            ]
+        },
+        {
+            "name": "run-1-large",
+            "rect": [
+                128,
+                88,
+                16,
+                32
+            ]
+        },
+        {
+            "name": "run-2-large",
+            "rect": [
+                144,
+                88,
+                16,
+                32
+            ]
+        },
+        {
+            "name": "run-3-large",
+            "rect": [
+                160,
+                88,
+                16,
+                32
+            ]
+        },
+        {
+            "name": "break-large",
+            "rect": [
+                176,
+                88,
+                16,
+                32
+            ]
+        },
+        {
+            "name": "jump-large",
+            "rect": [
+                192,
+                88,
+                16,
+                32
+            ]
+        },
+        {
+            "name": "crouch-large",
+            "rect": [
+                0,
+                120,
+                16,
+                32
             ]
         }
     ],
     "animations": [
         {
             "name": "run",
-            "frameLength": 6,
+            "frameLen": 6,
             "frames": [
                 "run-1",
                 "run-2",
                 "run-3"
+            ]
+        },
+        {
+            "name": "climb",
+            "frameLen": 4,
+            "frames": [
+                "climb-1",
+                "climb-2"
+            ]
+        },
+        {
+            "name": "swim-idle",
+            "frameLen": 4,
+            "frames": [
+                "swim-1",
+                "swim-2"
+            ]
+        },
+        {
+            "name": "swim",
+            "frameLen": 6,
+            "frames": [
+                "swim-3",
+                "swim-4",
+                "swim-5"
+            ]
+        },
+        {
+            "name": "run-large",
+            "frameLen": 6,
+            "frames": [
+                "run-1-large",
+                "run-2-large",
+                "run-3-large"
             ]
         }
     ]

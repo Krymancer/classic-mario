@@ -1,11 +1,11 @@
 {
-    "imagePath": "images/characters.gif",
+    "imageURL": "images/sprites.png",
     "frames": [
         {
             "name": "walk-1",
             "rect": [
-                296,
-                187,
+                80,
+                0,
                 16,
                 16
             ]
@@ -13,8 +13,8 @@
         {
             "name": "walk-2",
             "rect": [
-                315,
-                187,
+                96,
+                0,
                 16,
                 16
             ]
@@ -22,8 +22,8 @@
         {
             "name": "flat",
             "rect": [
-                277,
-                187,
+                112,
+                0,
                 16,
                 16
             ]
@@ -32,7 +32,7 @@
     "animations": [
         {
             "name": "walk",
-            "frameLength": 0.15,
+            "frameLen": 0.15,
             "frames": [
                 "walk-1",
                 "walk-2"

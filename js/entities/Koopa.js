@@ -16,6 +16,14 @@ export function loadKoopa() {
   return loadSpriteSheet('koopa').then(createKoopaFactory);
 }
 
+export function loadKoopaGreen() {
+  return loadSpriteSheet('koopa-green').then(createKoopaFactory);
+}
+
+export function loadKoopaBlue() {
+  return loadSpriteSheet('koopa-blue').then(createKoopaFactory);
+}
+
 function createKoopaFactory(sprite) {
   const walkAnimation = sprite.animations.get('walk');
   const wakeAnimation = sprite.animations.get('wake');
