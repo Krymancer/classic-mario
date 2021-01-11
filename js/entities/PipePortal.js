@@ -1,4 +1,4 @@
-import {Direction} from '../math.js';
+import {Direction} from '../Math.js';
 import Entity from '../Entity.js';
 import Pipe from '../traits/Pipe.js';
 import {loadAudioBoard} from '../loaders/audio.js';
