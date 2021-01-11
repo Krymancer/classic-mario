@@ -1,40 +1,50 @@
+import InputRouter from './InputRouter.js';
 import KeyboardState from './KeyboardState.js';
+import Jump from './traits/Jump.js';
+import Go from './traits/Go.js';
 
-export function setupKeyboard(player) {
+export function setupKeyboard(window) {
   const input = new KeyboardState();
+  const router = new InputRouter();
+
+  input.listen(window);
 
   input.addMapping('Space', (keyState) => {
     if (keyState) {
-      player.jump.start();
+      router.route((entity) => entity.traits.get(Jump).start());
     } else {
-      player.jump.cancel();
+      router.route((entity) => entity.traits.get(Jump).cancel());
     }
   });
 
   input.addMapping('ArrowUp', (keyState) => {
     if (keyState) {
-      player.jump.start();
+      router.route((entity) => entity.traits.get(Jump).start());
     } else {
-      player.jump.cancel();
+      router.route((entity) => entity.traits.get(Jump).cancel());
     }
   });
   input.addMapping('KeyZ', (keyState) => {
     if (keyState) {
-      player.jump.start();
+      router.route((entity) => entity.traits.get(Jump).start());
     } else {
-      player.jump.cancel();
+      router.route((entity) => entity.traits.get(Jump).cancel());
     }
   });
 
   input.addMapping('KeyX', (keyState) => {
-    player.turbo(keyState);
+    router.route((entity) => entity.turbo(keyState));
   });
   input.addMapping('ArrowRight', (keyState) => {
-    player.go.direction += keyState ? 1 : -1;
+    router.route(
+      (entity) => (entity.traits.get(Go).direction += keyState ? 1 : -1),
+    );
   });
   input.addMapping('ArrowLeft', (keyState) => {
-    player.go.direction += keyState ? -1 : 1;
+    router.route(
+      (entity) => (entity.traits.get(Go).direction += keyState ? -1 : 1),
+    );
   });
 
-  return input;
+  return router;
 }

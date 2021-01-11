@@ -4,7 +4,7 @@ import {Sides} from '../Entity.js';
 
 export default class Jump extends Trait {
   constructor() {
-    super('jump');
+    super();
 
     this.ready = 0;
     this.duraction = 0.3;

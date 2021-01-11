@@ -25,12 +25,11 @@ export default class Entity {
     this.bounds = new BoundingBox(this.pos, this.size, this.offset);
     this.lifeTime = 0;
 
-    this.traits = [];
+    this.traits = new Map();
   }
 
   addTrait(trait) {
-    this.traits.push(trait);
-    this[trait.NAME] = trait;
+    this.traits.set(trait.constructor, trait);
   }
 
   update(gameContext, level) {

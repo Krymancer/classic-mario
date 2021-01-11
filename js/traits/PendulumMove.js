@@ -4,7 +4,8 @@ import {Sides} from '../Entity.js';
 
 export default class PendulumMove extends Trait {
   constructor() {
-    super('pendulumMove');
+    super();
+
     this.enable = true;
     this.speed = -30;
   }

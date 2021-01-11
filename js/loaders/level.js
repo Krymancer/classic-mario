@@ -8,11 +8,16 @@ import {loadSpriteSheet} from '../loaders/sprite.js';
 import {Matrix} from '../Math.js';
 import Entity from '../Entity.js';
 import LevelTimer from '../traits/LevelTimer.js';
+import Trigger from '../traits/Trigger.js';
 
 function createTimer() {
   const timer = new Entity();
   timer.addTrait(new LevelTimer());
   return timer;
+}
+
+function loadPattern(name) {
+  return loadJSON(`sprites/patterns/${name}.json`);
 }
 
 function setupBehavior(level) {
@@ -27,9 +32,9 @@ function setupBehavior(level) {
   });
 }
 
-function setupBackground(levelSpec, level, backgorundSprites) {
+function setupBackground(levelSpec, level, backgorundSprites, patterns) {
   levelSpec.layers.forEach((layer) => {
-    const grid = createGrid(layer.tiles, levelSpec.patterns);
+    const grid = createGrid(layer.tiles, patterns);
     const backgroungLayer = createBackgroundLayer(
       level,
       grid,
@@ -51,6 +56,26 @@ function setupEntities(levelSpec, level, entityFactory) {
   });
 }
 
+function setupTriggers(levelSpec, level) {
+  if (!levelSpec.triggers) {
+    return;
+  }
+
+  for (const triggerSpec of levelSpec.triggers) {
+    const trigger = new Trigger();
+
+    trigger.conditions.push((entity, touches, gc, level) => {
+      level.events.emit(Level.EVENT_TRIGGER, triggerSpec, entity, touches);
+    });
+
+    const entity = new Entity();
+    entity.addTrait(trigger);
+    entity.pos.set(triggerSpec.pos[0], triggerSpec.pos[1]);
+    entity.size.set(64, 64);
+    level.entities.add(entity);
+  }
+}
+
 export function createLevelLoader(entityFactory) {
   return function loadLevel(name) {
     return loadJSON(`levels/${name}.json`)
@@ -59,14 +84,17 @@ export function createLevelLoader(entityFactory) {
           levelSpec,
           loadSpriteSheet(levelSpec.spriteSheet),
           loadMusicSheet(levelSpec.musicSheet),
+          loadPattern(levelSpec.patternSheet),
         ]),
       )
-      .then(([levelSpec, backgorundSprites, musicPlayer]) => {
+      .then(([levelSpec, backgorundSprites, musicPlayer, patterns]) => {
         const level = new Level();
+        level.name = name;
         level.music.setPlayer(musicPlayer);
 
-        setupBackground(levelSpec, level, backgorundSprites);
+        setupBackground(levelSpec, level, backgorundSprites, patterns);
         setupEntities(levelSpec, level, entityFactory);
+        setupTriggers(levelSpec, level);
         setupBehavior(level);
 
         return level;

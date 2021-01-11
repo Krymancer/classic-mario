@@ -37,6 +37,10 @@ export function createBackgroundLayer(level, tiles, sprites) {
     const drawTo = drawFrom + drawWidth;
 
     redraw(drawFrom, drawTo);
-    context.drawImage(buffer, -camera.pos.x % 16, -camera.pos.y);
+    context.drawImage(
+      buffer,
+      Math.floor(-camera.pos.x % 16),
+      Math.floor(-camera.pos.y),
+    );
   };
 }

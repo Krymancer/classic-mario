@@ -2,7 +2,7 @@ import Trait from '../Trait.js';
 
 export default class Go extends Trait {
   constructor() {
-    super('go');
+    super();
 
     this.direction = 0;
     this.accleration = 400;

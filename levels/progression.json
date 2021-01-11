@@ -1,7 +1,8 @@
 {
-    "spriteSheet": "underworld",
-    "musicSheet": "underworld",
+    "spriteSheet": "overworld",
+    "musicSheet": "silent",
     "patternSheet": "overworld-pattern",
+    "length": 3103,
     "layers": [
         {
             "tiles": [

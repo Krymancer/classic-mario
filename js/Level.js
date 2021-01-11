@@ -1,15 +1,28 @@
+import Camera from './Camera.js';
 import Compositor from './Compositor.js';
 import TileCollider from './TileCollider.js';
 import EntityCollider from './EntityCollider.js';
 import MusicController from './MusicController.js';
 import EventEmitter from './EventEmitter.js';
+import Scene from './Scene.js';
+import {findPlayers} from './player.js';
 
-export default class Level {
+function focusPlayer(level) {
+  for (const player of findPlayers(level.entities)) {
+    level.camera.pos.x = Math.max(0, player.pos.x - 100);
+  }
+}
+
+export default class Level extends Scene {
+  static EVENT_TRIGGER = Symbol('trigger');
   constructor() {
-    this.compositor = new Compositor();
+    super();
+
+    this.name = '';
+
     this.entities = new Set();
 
-    this.events = new EventEmitter();
+    this.camera = new Camera();
 
     this.length = 0;
     this.gravity = 1500;
@@ -34,6 +47,17 @@ export default class Level {
       entity.finalize();
     });
 
+    focusPlayer(this);
+
     this.totalTime += gameContext.deltaTime;
+  }
+
+  draw(gameContext) {
+    const {videoContext} = gameContext;
+    this.compositor.draw(videoContext, this.camera);
+  }
+
+  pause() {
+    this.music.pause();
   }
 }
